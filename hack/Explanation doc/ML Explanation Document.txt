@@ -1,0 +1,49 @@
+Documentation: Machine Learning Approach for Entity Value Extraction from Images.
+
+Problem Overview:
+
+The goal of this project is to extract entity values such as weight, volume, and dimensions from product images. These values are often embedded in the image either as text or visual representations of the product itself, which poses challenges in accurately predicting these entities. This is particularly useful in fields like e-commerce, where many products lack detailed descriptions, and precise information needs to be extracted from images to provide accurate data for digital marketplaces.
+________________________________________
+ML Approach:
+
+We approached the task using a multi-modal deep learning framework that integrates both image-based feature extraction and textual content extraction using Optical Character Recognition (OCR).
+
+1.Image Processing and Feature Extraction:
+We used ResNet50, a pre-trained convolutional neural network (CNN), for extracting high-level features from the product images. The transfer learning approach allowed us to use the network's knowledge from large datasets like ImageNet and fine-tune it for our task.
+Images were preprocessed by resizing, normalization, and applying data augmentation techniques (random rotations, flips) to make the model more robust.
+
+2.OCR Text Detection:
+We employed Tesseract OCR to extract text from the images, as product images often include entity information like weight or dimensions directly in the image. This textual data was processed and tokenized into useful entity-related information (e.g., numeric values, units).
+The extracted text was further cleaned to standardize the formats.
+
+3.Multi-Modal Learning:
+We designed a hybrid model that combines features extracted from images (via ResNet50) with the textual data obtained from OCR.
+The textual and image features were concatenated and fed into a dense layer that performs final classification for unit prediction and regression for value prediction.
+________________________________________
+ML Models Used:
+
+1.ResNet50 CNN:
+Used for visual feature extraction from product images. Transfer learning was used to fine-tune the model on the dataset to predict entity values.
+
+2.Tesseract OCR:
+Used for text extraction from images, identifying relevant numeric values and units present directly in the image.
+3.Random Forest Regressor/Light GBM:
+
+After concatenating image features and OCR-extracted text, a Random Forest Regressor was trained for predicting entity values, and Light GBM was used for classifying units.
+________________________________________
+Experiments and Model Evaluation:
+
+1.Data Splitting:
+The dataset was split into an 80-20 ratio for training and validation. Image augmentation techniques were applied to reduce overfitting and improve generalization.
+
+2.Hyperparameter Tuning:
+We optimized the learning rate, number of layers, and batch size to maximize the model's performance.
+Early stopping and dropout were employed to prevent overfitting.
+
+3.Model Performance:
+F1 Score was used as the primary metric to evaluate model performance on both the training and validation sets. The model was tuned to balance precision and recall, ensuring that false positives and false negatives were minimized.
+________________________________________
+Conclusion:
+
+Our multi-modal solution, combining deep learning for visual features and OCR for textual extraction, proved effective in extracting entity values and predicting units. This approach is generalizable to other domains where product information is embedded in images. While the model performed well on the validation set, there were challenges in extracting text from low-resolution images, which affected OCR performance.
+
